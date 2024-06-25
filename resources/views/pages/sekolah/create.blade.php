@@ -1,0 +1,128 @@
+@extends('layouts.dashboard.template')
+
+@section('content')
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    @include('layouts.dashboard.navbar')
+    @include('layouts.dashboard.sidebar')
+
+
+
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Form Tambah Data Sekolah</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Form Tambah Data Sekolah</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-8">
+              <!-- general form elements -->
+              <div class="card card-success">
+                <div class="card-header">
+                  <h3 class="card-title text-white">Tambah Data Sekolah</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="{{ route('sekolah.store') }}" method="POST">
+                  @csrf
+
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="rt" class="text-uppercase">nama sekolah</label>
+                      <input type="text" name="nama" value="{{ old('nama') }}" class="form-control @error('nama') is-invalid @enderror" id="nama" placeholder="masukkan nama sekolah">
+                      @error('nama')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+
+                    <div class="form-group">
+                      <label for="name" class="text-uppercase">alamat sekolah</label>
+                      <textarea placeholder="masukkan alamat fasum..." name="alamat" class="form-control @error('alamat') is-invalid @enderror" cols="30"
+                      rows="3">{{ old('alamat') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="rt" class="text-uppercase">rt</label>
+                     <select name="rt" class="form-control select2 @error('rt') is-invalid @enderror">
+                      <option value="selected"> --pilih RT-- </option>
+                      @foreach ($rts as $item)
+                      <option value="{{ $item->rt }}">{{ $item->rt }}</option>
+                      @endforeach
+                     </select>
+                      @error('rt')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+  
+                    <div class="form-group">
+                      <label for="rw" class="text-uppercase">rw</label>
+                      <select name="rw" class="form-control @error('rw') is-invalid @enderror select2">
+                        <option value="selected"> --pilih RW-- </option>
+                        @foreach($rws as $item)
+                        <option value="{{ $item->rw }}">{{ $item->rw }}</option>
+                        @endforeach
+                      </select>
+                      @error('rw')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+
+                    <div class="form-group">
+                      <label for="name" class="text-upercase">status sekolah</label>
+                     <select name="status"  id="status" class="form-control @error ('status') is-invalid @enderror">
+                      <option selected> --pilih status-- </option>
+                      <option disabled> ----------------- </option>
+                      <option value="NEGERI">NEGERI</option>
+                      <option value="SWASTA">SWASTA</option>
+                     </select>
+                      @error('status')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror  
+                    </div>
+
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-success">SIMPAN</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+
+            </div>
+            <!--/.col (left) -->
+
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- /.content -->
+    </div>
+  </div>
+
+  @include('layouts.dashboard.script')
+
+  @include('layouts.dashboard.footer')
+</body>
+
+
+@endsection

@@ -1,0 +1,187 @@
+@extends('layouts.dashboard.template')
+
+@section('content')
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    @include('layouts.dashboard.navbar')
+    @include('layouts.dashboard.sidebar')
+
+
+
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Form Edit Data Perempuan rawan sosial ekonomi (PRSE)</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Form Edit Data Perempuan rawan sosial ekonomi (PRSE)</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-8">
+              <!-- general form elements -->
+              <div class="card card-success">
+                <div class="card-header">
+                  <h3 class="card-title text-white">Edit Data Perempuan rawan sosial ekonomi (PRSE)</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="{{ route('prse.update', $prse->id) }}" method="POST">
+                  @csrf
+                  @method('PUT')
+
+                  <div class="card-body">
+
+                    <div class="form-group">
+                      <label for="nama" class="text-uppercase">nama</label>
+                     <select name="nama" id="nama" class="form-control select2">
+                      <option value="selected"> --pilih-- </option>
+                      @foreach ($warga as $item)
+                        <option value="{{ $item->nama }}" {{ $item->nama == $prse->nama ? 'selected' : ''}}>{{ $item->nik }} - {{ $item->nama }}</option>
+                      @endforeach
+                     </select>
+                      @error('nama')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+
+                    <div class="form-group">
+                      <label for="nama" class="text-uppercase">nik</label>
+                     <select name="nik" id="nama" class="form-control select2">
+                      <option value="selected"> --pilih-- </option>
+                      @foreach ($warga as $item)
+                        <option value="{{ $item->nik }}" {{ $item->nik == $prse->nik ? 'selected' : '' }}>{{ $item->nik }} - {{ $item->nama }}</option>
+                      @endforeach
+                     </select>
+                      @error('nama')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+
+                    <div class="form-group">
+                      <label for="nama" class="text-uppercase">kk</label>
+                     <select name="kk" id="nama" class="form-control select2">
+                      <option value="selected"> --pilih-- </option>
+                      @foreach ($warga as $item)
+                        <option value="{{ $item->kk}}" {{ $item->kk == $prse->kk ? 'selected' : '' }}>{{ $item->kk }} - {{ $item->nama }}</option>
+                      @endforeach
+                     </select>
+                      @error('nama')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+
+                    <div class="form-group">
+                      <label for="jenis_kelamin" class="text-uppercase">pilih jenis kelamin</label>
+                      <select name="jenis_kelamin" class="form-control">
+                        <option value="">{{ $prse->jenis_kelamin }}</option>
+                        <option value="">-- Pilih --</option>
+                        <option value="laki-laki" {{ $prse->jenis_kelamin == 'laki-laki' ? 'selected' : '' }}>laki-laki</option>
+                        <option value="perempuan" {{ $prse->jenis_kelamin == 'permpuan' ? 'selected' : '' }}>perempuan</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="tempat_lahir" class="text-uppercase">tempat lahir</label>
+                      <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir') ?? $prse->tempat_lahir }}" class="form-control" id="tempat_lahir" placeholder="masukkan tempat lahir">
+                    </div>
+  
+                    <div class="form-group">
+                      <label for="tempat_lahir" class="text-uppercase">tanggal lahir</label>
+                      <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') ?? $prse->tanggal_lahir }}" class="form-control" id="tanggal_lahir" >
+                    </div>
+
+                    <div class="form-group">
+                      <label for="agama" class="text-uppercase">agama</label>
+                      <select name="agama" id="agama" class="form-control select2">
+                        <option selected>--pilih--</option>
+                        <option value="islam" {{ $prse->agama == 'islam' ? 'selected' : '' }}>islam</option>
+                        <option value="kristen" {{ $prse->agama == 'kristen' ? 'selected' : '' }}>kristen</option>
+                        <option value="hindu" {{ $prse->agama == 'hindu' ? 'selected' : '' }}>hindu</option>
+                        <option value="budha" {{ $prse->agama == 'budha' ? 'selected' : '' }}>budha</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="alamat" class="text-uppercase">alamat</label>
+                      <textarea placeholder="masukkan alamat ..." name="alamat" class="form-control @error('alamat') is-invalid @enderror" cols="30"
+                      rows="3">{{ old('alamat') ?? $prse->alamat }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="rt"class="text-uppercase">rt</label>
+                     <select name="rt" class="form-control select2 @error('rt') is-invalid @enderror">
+                      <option value="selected"> --pilih RT-- </option>
+                      @foreach ($rts as $item)
+                      <option value="{{ $item->rt }}" {{ $item->rt == $prse->rt ? 'selected' : '' }}>{{ $item->rt }}</option>
+                      @endforeach
+                     </select>
+                      @error('rt')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+  
+                    <div class="form-group">
+                      <label for="rw" class="text-uppercase">rw</label>
+                      <select name="rw" class="form-control @error('rw') is-invalid @enderror select2">
+                        <option value="selected"> --pilih RW-- </option>
+                        @foreach($rws as $item)
+                        <option value="{{ $item->rw }}" {{ $item->rw == $prse->rw ? 'selected' : '' }}>{{ $item->rw }}</option>
+                        @endforeach
+                      </select>
+                      @error('rw')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+
+                    <div class="form-group">
+                      <label for="name" class="text-uppercase">no hp</label>
+                      <input type="number" name="no_hp" value="{{ old('no_hp') ?? $prse->no_hp }}" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" placeholder="masukkan no hp">
+                      @error('no_hp')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror  
+                    </div>
+
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-warning text-white">UBAH</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+
+            </div>
+            <!--/.col (left) -->
+
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- /.content -->
+    </div>
+  </div>
+
+  @include('layouts.dashboard.script')
+
+  @include('layouts.dashboard.footer')
+</body>
+
+
+@endsection
